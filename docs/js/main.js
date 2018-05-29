@@ -4,8 +4,8 @@ var Bomb = (function () {
         this.element = document.createElement("bomb");
         var foreground = document.getElementsByTagName("foreground")[0];
         foreground.appendChild(this.element);
-        this.x = window.innerWidth - this.getRectangle().width;
-        this.y = window.innerHeight - this.getRectangle().height;
+        this.x = 4000 - this.getRectangle().width - 1000;
+        this.y = window.innerHeight - this.getRectangle().height - 100;
     }
     Bomb.prototype.update = function () {
         this.element.style.transform = "translate(" + this.x + "px, " + this.y + "px)";
@@ -15,7 +15,6 @@ var Bomb = (function () {
     };
     return Bomb;
 }());
-<<<<<<< HEAD
 var Game = (function () {
     function Game() {
         this.currentscreen = new StartScreen(this);
@@ -39,7 +38,7 @@ window.addEventListener("load", function () { return new Game(); });
 var GameOver = (function () {
     function GameOver() {
         this.textfield = document.createElement("textfield");
-        foreground.appendChild(this.textfield);
+        document.body.appendChild(this.textfield);
     }
     GameOver.prototype.update = function () {
         this.textfield.innerHTML = "GAME OVER, MAN!";
@@ -102,10 +101,6 @@ var Platform = (function () {
 }());
 var Player = (function () {
     function Player(b) {
-=======
-var Car = (function () {
-    function Car(g) {
->>>>>>> parent of bfc7c23... Name update**
         var _this = this;
         this.levelposition = 0;
         this.y = window.innerHeight - 150;
@@ -120,7 +115,7 @@ var Car = (function () {
         window.addEventListener("keydown", function (e) { return _this.onKeyDown(e); });
         window.addEventListener("keyup", function (e) { return _this.onKeyUp(e); });
     }
-    Car.prototype.onKeyDown = function (event) {
+    Player.prototype.onKeyDown = function (event) {
         switch (event.key) {
             case "ArrowLeft":
                 this.speedLeft = 10;
@@ -133,7 +128,7 @@ var Car = (function () {
                 break;
         }
     };
-    Car.prototype.onKeyUp = function (event) {
+    Player.prototype.onKeyUp = function (event) {
         switch (event.key) {
             case "ArrowLeft":
                 this.speedLeft = 0;
@@ -146,10 +141,10 @@ var Car = (function () {
                 break;
         }
     };
-    Car.prototype.hitPlat = function () {
+    Player.prototype.hitPlat = function () {
         this.gravity = 0;
     };
-    Car.prototype.update = function () {
+    Player.prototype.update = function () {
         this.levelposition = this.levelposition + this.speedLeft - this.speedRight;
         this.gamescreen.scrollLevel(this.levelposition);
         var newY = this.y - this.speedUp + this.gravity;
@@ -157,76 +152,20 @@ var Car = (function () {
             this.y = newY;
         this.element.style.transform = "translate(200px, " + this.y + "px)";
     };
-    Car.prototype.getRectangle = function () {
+    Player.prototype.getRectangle = function () {
         return this.element.getBoundingClientRect();
     };
-    return Car;
-}());
-var Game = (function () {
-    function Game() {
-        this.bomb = new Bomb();
-        this.platform = new Platform();
-        this.car = new Car(this);
-        this.foreground = document.getElementsByTagName("foreground")[0];
-        this.gameLoop();
-    }
-    Game.prototype.scrollLevel = function (pos) {
-        this.foreground.style.transform = "translateX(" + pos + "px)";
-    };
-    Game.prototype.gameLoop = function () {
-        var _this = this;
-        this.car.update();
-        this.bomb.update();
-        this.platform.update();
-        if (this.checkCollision(this.car.getRectangle(), this.platform.getRectangle())) {
-            this.car.hitPlat();
-        }
-        else {
-            this.car.gravity = 10;
-        }
-        if (this.checkCollision(this.car.getRectangle(), this.bomb.getRectangle())) {
-            console.log("car hits the bomb");
-        }
-        requestAnimationFrame(function () { return _this.gameLoop(); });
-    };
-    Game.prototype.checkCollision = function (a, b) {
-        return (a.left <= b.right &&
-            b.left <= a.right &&
-            a.top <= b.bottom &&
-            b.top <= a.bottom);
-    };
-    return Game;
-}());
-window.addEventListener("load", function () { return new Game(); });
-var Platform = (function () {
-    function Platform() {
-        this.x = 800;
-        this.y = 800;
-        this.div = document.createElement("platform");
-        var foreground = document.getElementsByTagName("foreground")[0];
-        foreground.appendChild(this.div);
-    }
-    Platform.prototype.update = function () {
-        this.div.style.transform = "translate(" + this.x + "px, " + this.y + "px)";
-    };
-    Platform.prototype.getRectangle = function () {
-        return this.div.getBoundingClientRect();
-    };
-    return Platform;
+    return Player;
 }());
 var StartScreen = (function () {
     function StartScreen(g) {
         var _this = this;
-        this.addNumbers(2, 3);
         this.game = g;
         this.textfield = document.createElement("textfield");
         var foreground = document.getElementsByTagName("foreground")[0];
         foreground.appendChild(this.textfield);
         this.textfield.addEventListener("click", function () { return _this.switchScreens(); });
     }
-    StartScreen.prototype.addNumbers = function (a, b) {
-        console.log(a + b);
-    };
     StartScreen.prototype.update = function () {
         this.textfield.innerHTML = "START THE GAME - dit is het startscreen";
     };

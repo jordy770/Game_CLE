@@ -1,4 +1,4 @@
-class Car  {
+class Player  {
     
     private element:HTMLElement
     private levelposition:number = 0

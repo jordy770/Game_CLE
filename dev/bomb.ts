@@ -9,8 +9,8 @@ class Bomb {
         let foreground = document.getElementsByTagName("foreground")[0]
         foreground.appendChild(this.element)
         
-        this.x = window.innerWidth - this.getRectangle().width
-        this.y = window.innerHeight - this.getRectangle().height
+        this.x = 4000 - this.getRectangle().width -1000
+        this.y = window.innerHeight - this.getRectangle().height - 100
     }
 
     public update():void {

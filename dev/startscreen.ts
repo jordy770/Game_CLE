@@ -2,13 +2,8 @@ class StartScreen {
 
     private textfield: HTMLElement
     private game : Game
-
-    private addNumbers(a:number, b:number){
-        console.log( a + b )
-    }
-
+    
     constructor(g:Game) {
-        this.addNumbers(2,3)
 
         this.game = g
         this.textfield = document.createElement("textfield")
